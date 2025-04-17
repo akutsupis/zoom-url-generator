@@ -26,6 +26,7 @@
       background: #f4f4f4;
       padding: 1rem;
       border-radius: 6px;
+      word-break: break-all;
     }
   </style>
 </head>
@@ -53,26 +54,20 @@
   <script>
     document.getElementById('generate-btn').addEventListener('click', () => {
       const rawId = document.getElementById('meeting-id').value;
-      const pwd = document.getElementById('meeting-pwd').value.trim();
-      const name = document.getElementById('display-name').value.trim();
+      const pwd = document.getElementById('meeting-pwd').value;
+      const name = encodeURIComponent(document.getElementById('display-name').value.trim());
 
-      const confno = rawId.replace(/\D/g, '');
-      if (!confno) return alert("Please enter a valid Meeting ID.");
+      const confno = rawId.replace(/\D/g, ''); // strip non-digits
 
-      let queryParams = [`confno=${confno}`];
+      const nameRaw = document.getElementById('display-name').value.trim();
+      const name = encodeURIComponent(nameRaw);
 
-      if (pwd) {
-        queryParams.push(`pwd=${encodeURIComponent(pwd)}`);
-      }
+      let baseParams = `confno=${confno}`;
+      if (pwd) baseParams += `&pwd=${encodeURIComponent(pwd)}`;
+      if (nameRaw) baseParams += `&uname=${name}`;
 
-      if (name) {
-        queryParams.push(`uname=${encodeURIComponent(name)}`);
-      }
-
-      const baseParams = queryParams.join('&');
-
-      const desktopUrl = `zoommtg://zoom.us/join?${baseParams}`;
-      const mobileUrl = `zoomus://zoom.us/join?${baseParams}`;
+      const desktopUrl = zoommtg://zoom.us/join?${baseParams};
+      const mobileUrl = zoomus://zoom.us/join?${baseParams};
 
       document.getElementById('url-desktop').href = desktopUrl;
       document.getElementById('url-desktop').textContent = desktopUrl;
