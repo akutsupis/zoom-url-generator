@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Zoom Protocol URL Generator</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+    }
+    label {
+      display: block;
+      margin-top: 1rem;
+    }
+    input, button {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+      box-sizing: border-box;
+    }
+    .output {
+      margin-top: 1.5rem;
+      background: #f4f4f4;
+      padding: 1rem;
+      border-radius: 6px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <h1>Zoom Protocol URL Generator</h1>
+  <p>This tool generates Zoom client join URLs using the <code>zoommtg://</code> and <code>zoomus://</code> protocols.</p>
+
+  <label for="meeting-id">Meeting ID</label>
+  <input type="text" id="meeting-id" placeholder="e.g., 123 456 7890">
+
+  <label for="meeting-pwd">Password</label>
+  <input type="text" id="meeting-pwd" placeholder="e.g., 123456">
+
+  <label for="display-name">Your Name</label>
+  <input type="text" id="display-name" placeholder="e.g., Michael">
+
+  <button id="generate-btn">Generate Zoom URLs</button>
+
+  <div class="output" id="output" style="display: none;">
+    <p><strong>Desktop:</strong> <a id="url-desktop" href="#" target="_blank"></a></p>
+    <p><strong>Mobile:</strong> <a id="url-mobile" href="#" target="_blank"></a></p>
+  </div>
+
+  <script>
+    document.getElementById('generate-btn').addEventListener('click', () => {
+      const rawId = document.getElementById('meeting-id').value;
+      const pwd = document.getElementById('meeting-pwd').value;
+      const name = encodeURIComponent(document.getElementById('display-name').value.trim());
+
+      const confno = rawId.replace(/\D/g, ''); // strip non-digits
+
+      const baseParams = `confno=${confno}&pwd=${encodeURIComponent(pwd)}&uname=${name}`;
+
+      const desktopUrl = `zoommtg://zoom.us/join?${baseParams}`;
+      const mobileUrl = `zoomus://zoom.us/join?${baseParams}`;
+
+      document.getElementById('url-desktop').href = desktopUrl;
+      document.getElementById('url-desktop').textContent = desktopUrl;
+
+      document.getElementById('url-mobile').href = mobileUrl;
+      document.getElementById('url-mobile').textContent = mobileUrl;
+
+      document.getElementById('output').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
