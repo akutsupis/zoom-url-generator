@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: sans-serif;
-      max-width: 600px;
+      max-width: 720px;
       margin: 2rem auto;
       padding: 1rem;
     }
@@ -33,15 +33,16 @@
 <body>
   <h1>Zoom Protocol URL Generator</h1>
   <p>This tool generates Zoom client join URLs using the <code>zoommtg://</code> and <code>zoomus://</code> protocols.</p>
-
+  <p>These links will work only on computers and mobile devices which have Zoom installed on them.</p>
+  
   <label for="meeting-id">Meeting ID</label>
   <input type="text" id="meeting-id" placeholder="e.g., 123 456 7890">
 
   <label for="meeting-pwd">Password</label>
-  <input type="text" id="meeting-pwd" placeholder="e.g., 123456">
+  <input type="text" id="meeting-pwd" placeholder="e.g., 12345678">
 
   <label for="display-name">Your Name</label>
-  <input type="text" id="display-name" placeholder="e.g., Michael">
+  <input type="text" id="display-name" placeholder="Optional: e.g., Michael">
 
   <button id="generate-btn">Generate Zoom URLs</button>
 
